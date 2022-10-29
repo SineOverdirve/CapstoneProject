@@ -77,7 +77,7 @@ def get_pie_chart(entered_site):
         )
         return fig
     else:
-        filtered_df = spacex_df[spacex_df['Launch Site']== entered_site]
+        filtered_df = filtered_df[filtered_df['Launch Site']== entered_site]
         filtered_df = filtered_df.groupby(['Launch Site', 'class']).size().reset_index(name='class count')
         fig = px.pie(
             filtered_df, 
@@ -108,8 +108,7 @@ def get_scatter(entered_site, payload):
         ).update_layout(xaxis_title='Payload Mass (kg)', yaxis_title='Launch Outcome')
         return fig
     else:
-        filter_df = spacex_df[spacex_df['Launch Site']== entered_site]
-        filter_df = filter_df[filter_df['Payload Mass (kg)'].between(payload[0], payload[1])]  
+        filter_df = filter_df[(filter_df['Launch Site']== entered_site]) & (filter_df['Payload Mass (kg)'].between(payload[0], payload[1]))]  
         fig=px.scatter(
             filter_df=filter_df[filter_df[filter_df['Launch Site']==entered_site]], 
             x='Payload Mass (kg)', 
